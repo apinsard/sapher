@@ -11,14 +11,14 @@ config.global =
 
 config.main =
   server_name: 'sapher.dev'
-  index: config.global.root + '/client/index.html'
+  index: config.global.root + '/static/index.html'
 
 config.www =
   server_name: 'www.sapher.dev'
 
 config.static =
   server_name: 'static.sapher.dev'
-  root: config.global.root + '/client'
+  root: config.global.root + '/static'
 
 config.api =
   server_name: 'api.sapher.dev'
