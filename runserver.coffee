@@ -63,6 +63,7 @@ config.static = new Config
 config.api = new Config
   inherits: config.global
   server_name: 'api.sapher.dev'
+  module: './server'
 
 config.default = new Config
   inherits: config.global
@@ -75,7 +76,7 @@ server = http.createServer (req, res) ->
   # Parse host
   host = req.headers.host
   if host
-    [hostname, port] = host.split(':')
+    [hostname, port] = host.split ':'
   hostname ?= config.global.get 'server_name'
   port ?= config.global.get 'server_port'
   protocol = 'http'
@@ -99,6 +100,9 @@ server = http.createServer (req, res) ->
     fs.readFile (conf.get 'index'), do (res) -> (err, data) ->
       res.writeHead 200
       res.end data
+  else if conf.has 'module'
+    mod = require conf.get 'module'
+    mod req, res
   else if conf.has 'root'
     fs.readFile (conf.get 'root') + page, do (res) -> (err, data) ->
       res.writeHead 200
